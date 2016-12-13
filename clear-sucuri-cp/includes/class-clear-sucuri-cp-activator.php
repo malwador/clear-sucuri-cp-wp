@@ -20,7 +20,7 @@
  * @subpackage Clear-CloudProxy-Cache/includes
  * @author     Salvador Aguilar <sal.aguilar81@gmail.com>
  */
-class Plugin_Name_Activator {
+class Clear_CloudProxy_Cache_Activator {
 
 	/**
 	 * Short Description. (use period)
