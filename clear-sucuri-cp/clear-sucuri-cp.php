@@ -10,7 +10,7 @@
  *
  * @link              https://salrocks.com/
  * @since             1.0.0
- * @package           Clear-CloudProxy-Cache
+ * @package           Clear_CloudProxy_Cache
  *
  * @wordpress-plugin
  * Plugin Name:       Clear CloudProxy Cache
@@ -33,40 +33,40 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-plugin-name-activator.php
  */
-function activate_clear_sucuri_cp() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-clear_sucuri_cp-activator.php';
-	Plugin_Name_Activator::activate();
+function activate_clear_cloudproxy_cache() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-clear-sucuri-cp-activator.php';
+	Clear_CloudProxy_Cache_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
-function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-clear_sucuri_cp-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+function deactivate_clear_cloudproxy_cache() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-clear-sucuri-cp-deactivator.php';
+	Clear_CloudProxy_Cache_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_clear_sucuri_cp' );
-register_deactivation_hook( __FILE__, 'deactivate_clear_sucuri_cp' );
+register_activation_hook( __FILE__, 'activate_clear_cloudproxy_cache' );
+register_deactivation_hook( __FILE__, 'deactivate_clear_cloudproxy_cache' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-clear_sucuri_cp.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-clear-sucuri-cp.php';
 
 /**
  * Begins execution of the plugin.
  * @since    1.0.0
  */
-function run_clear_sucuri_cp() {
+function run_Clear_CloudProxy_Cache() {
 
-	$plugin = new clear_sucuri_cp();
+	$plugin = new Clear_CloudProxy_Cache();
 	$plugin->run();
 
 }
-run_clear_sucuri_cp();
+run_Clear_CloudProxy_Cache();
 
 /*
 * Adding the wp-admin bar menu link.
@@ -77,8 +77,8 @@ run_clear_sucuri_cp();
 function custom_toolbar_link($wp_admin_bar) {
 	$args = array(
 		'id' => 'clear-cloudproxy-cache',
-		'title' => 'Clear CloudProxy',
-		'href' => 'https://waf.sucuri.net',
+		'title' => 'CloudProxy Cache',
+		'href' => '#',
 		'meta' => array(
 			'class' => 'clear-cloudproxy-wpa-title',
 			'title' => 'Go to CloudProxy Dashboard'
@@ -86,43 +86,29 @@ function custom_toolbar_link($wp_admin_bar) {
 	);
 	$wp_admin_bar->add_node($args);
 
-// Add the first child link
+// Add the first child link for the Sucuri' CloudProxy Dashboard
 
 	$args = array(
-		'id' => 'wpbeginner-guides',
-		'title' => 'WPBeginner Guides',
-		'href' => 'http://www.wpbeginner.com/category/beginners-guide/',
-		'parent' => 'wpbeginner',
+		'id' => 'clear-cloudproxy-cache-waf',
+		'title' => 'Go to CloudProxy Dashboard',
+		'href' => 'https://waf.sucuri.net',
+		'parent' => 'clear-cloudproxy-cache',
 		'meta' => array(
-			'class' => 'wpbeginner-guides',
-			'title' => 'Visit WordPress Beginner Guides'
+			'class' => 'clear-cloudproxy-wpa-link',
+			'title' => 'Go to CloudProxy Dashboard'
 		)
 	);
 	$wp_admin_bar->add_node($args);
 
 // Add another child link
 	$args = array(
-		'id' => 'wpbeginner-tutorials',
-		'title' => 'WPBeginner Tutorials',
-		'href' => 'http://www.wpbeginner.com/category/wp-tutorials/',
-		'parent' => 'wpbeginner',
+		'id' => 'clear-cloudproxy-cache-purge',
+		'title' => 'Clear All CloudProxy Caches',
+		'href' => '#',
+		'parent' => 'clear-cloudproxy-cache',
 		'meta' => array(
-			'class' => 'wpbeginner-tutorials',
-			'title' => 'Visit WPBeginner Tutorials'
-		)
-	);
-	$wp_admin_bar->add_node($args);
-
-// Add a child link to the child link
-
-	$args = array(
-		'id' => 'wpbeginner-themes',
-		'title' => 'WPBeginner Themes',
-		'href' => 'http://www.wpbeginner.com/category/wp-themes/',
-		'parent' => 'wpbeginner-tutorials',
-		'meta' => array(
-			'class' => 'wpbeginner-themes',
-			'title' => 'Visit WordPress Themes Tutorials on WPBeginner'
+			'class' => 'clear-cloudproxy-wpa-link',
+			'title' => 'Clear All CloudProxy Caches'
 		)
 	);
 	$wp_admin_bar->add_node($args);
@@ -130,3 +116,26 @@ function custom_toolbar_link($wp_admin_bar) {
 }
 
 add_action('admin_bar_menu', 'custom_toolbar_link', 999);
+
+// Adding the menu link on wp-admin
+
+function clear_sucuri_cp_add_menu_page() {
+	add_menu_page(
+		__( 'CloudProxy', 'textdomain' ),
+		'CloudProxy',
+		'manage_options',
+		'clear-sucuri-cp',
+		'',
+		'dashicons-shield',
+		66
+	);
+
+	add_submenu_page( 'clear-sucuri-cp', 'Sucuri CloudProxy Dashboard', 'Sucuri CloudProxy Dashboard', 'manage_options', 'clear-sucuri-cp-dashboard', 'my_plugin_options');
+
+	add_submenu_page( 'clear-sucuri-cp', 'Settings', 'Settings', 'manage_options', 'clear-sucuri-cp-settings', 'my_plugin_options2');
+
+	add_submenu_page( 'clear-sucuri-cp', 'Donate!', 'Donate!', 'manage_options', 'clear-sucuri-cp-donate', 'my_plugin_options3');
+
+}
+add_action( 'admin_menu', 'clear_sucuri_cp_add_menu_page' );
+
